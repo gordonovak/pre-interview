@@ -5,7 +5,7 @@ query=$(<../assets/queryPath.txt)
 
 while [[ true ]]; do
 
-    if [[ -e $cpath ]]; then
+    if [[ -e "$cpath/cvc5" ]]; then
         echo "\033[1m-- cvc5 executable located --\033[0m\n"
         echo $cpath > ../assets/cvcPath.txt
         break

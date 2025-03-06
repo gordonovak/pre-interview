@@ -5,19 +5,16 @@ query=$(<../assets/queryPath.txt)
 
 while [[ true ]]; do
 
-    if [[ -e "$cpath/cvc5" ]]; then
-        echo "\033[1m-- cvc5 executable located --\033[0m\n"
+    if [[ -e "$cpath/cvc5" && -f "$cpath/cvc5" ]]; then
+        echo "\033[32m\n-- cvc5 executable located --\033[0m"
         echo $cpath > ../assets/cvcPath.txt
         break
     else
-        echo "-- cvc5 executable not found --\n"
-    fi
-
-    if [[ -z $cpath || ! -e $cpath ]]; then
-        echo "\nPlease specify the full path to your cv5 executable."
-        echo -n "\033[31mFrom Root: \033[0m"
+        echo "\n\033[31m-- cvc5 executable not found --\033[0m"
+        echo "Please specify the full path to your cv5 executable."
+        echo -n "\033[2mFrom Root: \033[0m/"
         read cpath
-        cpath=$(echo $cpath | xargs)
+        cpath=$(echo "/$cpath" | xargs)
     fi
 done
 
@@ -32,16 +29,16 @@ fi
 while [[ $yn == "y" || $yn == "Y" || ! -e $query ]]; do
     
     echo "\nPlease specify the full path to your query folder."
-    echo -n "\033[34mFrom Root: \033[0m"
+    echo -n "\033[34mFrom Root: \033[0m/"
     read query
-    query=$(echo $query | xargs)
+    query=$(echo "/$query" | xargs)
 
     if [[ -e $query ]]; then
-        echo "-- Query Folder Located --\n"
+        echo "-- Query Folder Located --"
         echo $query > ../assets/queryPath.txt
         break
     else
-        echo "-- Query Folder Not Found --\n"
+        echo "-- Query Folder Not Found --"
     fi
 done
 
@@ -67,9 +64,9 @@ echo " ms"
 
 smtCount=$(echo $query/*.smt2 | wc -w)
 smtCount=$(echo $smtCount | xargs)
-echo -n "\nRunning solver on "
-echo -n "\033[35m$smtCount\033[0m"
-echo " queries."
+echo "\nRunning solver on \033[35m$smtCount\033[0m queries."
+
+sleep 1
 
 sat=0
 unsat=0

@@ -13,7 +13,7 @@ while [[ true ]]; do
         echo "-- cvc5 executable not found --\n"
     fi
 
-    if [[ -z $cpath || -e $cpath ]]; then
+    if [[ -z $cpath || ! -e $cpath ]]; then
         echo "\nPlease specify the full path to your cv5 executable."
         echo -n "\033[31mFrom Root: \033[0m"
         read cpath
